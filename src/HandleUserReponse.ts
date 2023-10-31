@@ -4,6 +4,13 @@ import { messages } from './Messages'
 export type BotState = {
     currentExercise: number
     currentChatId: number
+    session: SessionAnswers | undefined,
+}
+
+export type SessionAnswers = {
+    catchingThoughts: 'Думаю о себе' | 'Думаю о ком-то' | 'Думаю о делах' | 'Волна тишины',
+    energyLevel: '+1' | '0' | '-1',
+    compass: 'Созерцание [Развитие]' | 'Поддержание [Сохранение]' | 'Разрушение [Износ]' | 'Наблюдение [Невмешательство]',
 }
 
 export const STATE_STAGE = {
