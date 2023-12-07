@@ -9,6 +9,8 @@ jobs:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
 
+    environment: production
+
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
@@ -20,3 +22,4 @@ jobs:
         run: flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          DOTENV_KEY: ${{ secrets.DOTENV_KEY }}
