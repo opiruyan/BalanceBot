@@ -24,8 +24,11 @@ RUN apt-get update -qq && \
 COPY --link package.json package-lock.json ./
 RUN npm install --production=false
 
+
 # Copy application code
 COPY --link . .
+
+RUN npm run build
 
 # Remove development dependencies
 RUN npm prune --production

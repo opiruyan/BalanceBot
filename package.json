@@ -2,6 +2,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "node ./build/Bot.js",
+    "start": "node ./build/Bot.js",
     "test": "jest"
   },
   "dependencies": {
