@@ -25,3 +25,8 @@ bot.on("message:text", (ctx) => {
 })
 
 bot.start()
+
+// https://grammy.dev/guide/commands
+bot.api.setMyCommands([
+    { command: "start", description: "Start the bot" },
+])
