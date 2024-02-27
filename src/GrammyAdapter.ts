@@ -1,6 +1,7 @@
 import { messages } from './Messages'
 import { bot } from './Bot'
 import { state } from './State'
+import { Menu } from '@grammyjs/menu'
 
 export function hideKeyboard() {
     bot.api.sendMessage(state.currentChatId, messages.bye, {
@@ -41,3 +42,11 @@ export function showFourthExercise(chatId: number) {
         },
     })
 }
+
+export const startMenu = new Menu("startMenu")
+    .text(messages.welcomeButton, handleBeginFirstExercise).row()
+
+function handleBeginFirstExercise(ctx: any) {
+        ctx.menu.close()
+        ctx.api.sendMessage(ctx.chat.id, messages.welcomeButton)
+    }

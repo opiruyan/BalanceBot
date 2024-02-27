@@ -6,6 +6,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@grammyjs/menu": "^1.2.1",
     "dotenv": "^16.3.1",
     "grammy": "^1.19.2"
   },
