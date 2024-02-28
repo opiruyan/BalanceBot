@@ -11,7 +11,6 @@ if (!process.env.BOT_TOKEN) {
 export const bot = new Bot(process.env.BOT_TOKEN)
 
 bot.command('start', (ctx) => {
-    state.currentChatId = ctx.chat?.id
     ctx.reply(messages.welcomeMessage, {
         reply_markup: {
             keyboard: [[messages.exercise1, messages.help]],
@@ -20,8 +19,7 @@ bot.command('start', (ctx) => {
 })
 
 bot.on("message:text", (ctx) => {
-    state.currentChatId = ctx.msg.chat.id
-    handleResponse(state, ctx.message.text)
+    handleResponse(ctx.msg.chat.id, state, ctx.message.text)
 })
 
 bot.start()
