@@ -2,6 +2,7 @@ import { messages } from './Messages'
 import { bot } from './Bot'
 import { state } from './State'
 import { Menu } from '@grammyjs/menu'
+import { InlineKeyboard } from 'grammy'
 
 export function hideKeyboard(chatId: number) {
     bot.api.sendMessage(chatId, messages.bye, {
@@ -13,37 +14,40 @@ export function hideKeyboard(chatId: number) {
 
 export function showFirstExercise(chatId: number) {
     const message = messages.exerciseTitle_1 + '\n' + messages.exerciseMessage_1
+    const keyboard = createInlineKeyboard(messages.exerciseOptions_1)
     bot.api.sendMessage(chatId, message, {
-        reply_markup: {
-            keyboard: [messages.exerciseOptions_1],
-        },
+        reply_markup: keyboard,
     })
+}
+
+export function createInlineKeyboard(keys: string[]) {
+    // const buttonRow = keys.map(label => InlineKeyboard.text(label))
+    const keyboard = new InlineKeyboard()
+    keys.forEach(key => {
+        keyboard.text(key).row()
+    })
+    // const keyboard = InlineKeyboard.from([buttonRow])
+    return keyboard
 }
 
 export function showSecondExercise(chatId: number) {
     const message = messages.exerciseTitle_2 + '\n' + messages.exerciseMessage_2
     bot.api.sendMessage(chatId, message, {
-        reply_markup: {
-            keyboard: [messages.exerciseOptions_2],
-        },
+        reply_markup: createInlineKeyboard(messages.exerciseOptions_2),
     })
 }
 
 export function showThirdExercise(chatId: number) {
     const message = messages.exerciseTitle_3 + '\n' + messages.exerciseMessage_3
     bot.api.sendMessage(chatId, message, {
-        reply_markup: {
-            keyboard: [messages.exerciseOptions_3],
-        },
+        reply_markup: createInlineKeyboard(messages.exerciseOptions_3),
     })
 }
 
 export function showFourthExercise(chatId: number) {
     const message = messages.exerciseTitle_4 + '\n' + messages.exerciseMessage_4
     bot.api.sendMessage(chatId, message, {
-        reply_markup: {
-            keyboard: [messages.exerciseOptions_4],
-        },
+        reply_markup: createInlineKeyboard(messages.exerciseOptions_4),
     })
 }
 
