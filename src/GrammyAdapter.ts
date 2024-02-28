@@ -51,7 +51,7 @@ export function showFourthExercise(chatId: number) {
     })
 }
 
-export function showResults(chatId: number) {
+export async function showResults(chatId: number) {
     const session = state.sessions.get(chatId)
     const resulstString = `Итоги Сессии:\n` +
         `Время: ${sessionTime()}\n` +
@@ -59,7 +59,7 @@ export function showResults(chatId: number) {
         `Внутренняя Скорость: ${mapEnergyLevelToText(session!.session.energyLevel)}\n`+
         `Внутренний Компас: ${session!.session.compass}\n`+
         'Увидимся через пару часов'
-    bot.api.sendMessage(chatId, resulstString)
+    await bot.api.sendMessage(chatId, resulstString)
 }
 
 function mapEnergyLevelToText(energyLevel: string) {
@@ -86,3 +86,11 @@ function handleBeginFirstExercise(ctx: any) {
         ctx.menu.close()
         ctx.api.sendMessage(ctx.chat.id, messages.welcomeButton)
     }
+
+export function showHelp(chatId: number) {
+    // const message = messages.exerciseTitle_1 + '\n' + messages.exerciseMessage_1
+    const keyboard = createInlineKeyboard([messages.exit])
+    bot.api.sendMessage(chatId, 'Здесь будет информация о связи и помощи', {
+        reply_markup: keyboard,
+    })
+}

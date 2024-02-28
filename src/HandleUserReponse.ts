@@ -1,4 +1,4 @@
-import { hideKeyboard, showFirstExercise, showFourthExercise, showResults, showSecondExercise, showThirdExercise } from './GrammyAdapter'
+import { hideKeyboard, showFirstExercise, showFourthExercise, showHelp, showResults, showSecondExercise, showThirdExercise } from './GrammyAdapter'
 import { messages } from './Messages'
 
 type ChatId = number
@@ -26,8 +26,19 @@ export const STATE_STAGE = {
     SHOW_RESULTS: 5,
 } as const
 
-export function handleResponse(chatId: number, state: BotState, message: string) {
+export async function handleResponse(chatId: number, state: BotState, message: string) {
     let session = state.sessions.get(chatId)
+
+    if (message === messages.exit)  {
+        state.sessions.delete(chatId)
+        hideKeyboard(chatId)
+        return
+    }
+
+    if (message === messages.help) {
+        showHelp(chatId)
+        return
+    }
 
     if (!session) {
         session = {
@@ -41,12 +52,6 @@ export function handleResponse(chatId: number, state: BotState, message: string)
             }
         }
         state.sessions.set(chatId, session)
-    }
-
-    if (message === messages.exit)  {
-        state.sessions.delete(chatId)
-        hideKeyboard(chatId)
-        return
     }
 
     session.currentExercise++
@@ -70,7 +75,7 @@ export function handleResponse(chatId: number, state: BotState, message: string)
             break
         case STATE_STAGE.SHOW_RESULTS:
             session.session.compass = message as SessionAnswers['compass']
-            showResults(session.currentChatId)
+            await showResults(session.currentChatId)
             session.currentExercise = 0
             hideKeyboard(chatId)
             break
