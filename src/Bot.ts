@@ -4,6 +4,7 @@ import { messages } from './Messages'
 import { handleResponse } from './HandleUserReponse'
 import { state } from './State'
 import { createInlineKeyboard } from './GrammyAdapter'
+import { handleStartCommand } from './HandleCommands'
 
 if (!process.env.BOT_TOKEN) {
     throw new Error('require BOT_TOKEN to interact with telegram API')
@@ -12,9 +13,7 @@ if (!process.env.BOT_TOKEN) {
 export const bot = new Bot(process.env.BOT_TOKEN)
 
 bot.command('start', (ctx) => {
-    ctx.reply(messages.welcomeMessage, {
-        reply_markup: createInlineKeyboard([messages.exercise1, messages.help]),
-    })
+    handleStartCommand(ctx)
 })
 
 bot.on("message:text", (ctx) => {

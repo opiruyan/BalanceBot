@@ -14,7 +14,7 @@ export function hideKeyboard(chatId: number) {
 
 export function showFirstExercise(chatId: number) {
     const message = messages.exerciseTitle_1 + '\n' + messages.exerciseMessage_1
-    const keyboard = createInlineKeyboard(messages.exerciseOptions_1)
+    const keyboard = createKeyboardButtons(messages.exerciseOptions_1)
     bot.api.sendMessage(chatId, message, {
         reply_markup: keyboard,
     })
@@ -33,21 +33,21 @@ export function createInlineKeyboard(keys: string[]) {
 export function showSecondExercise(chatId: number) {
     const message = messages.exerciseTitle_2 + '\n' + messages.exerciseMessage_2
     bot.api.sendMessage(chatId, message, {
-        reply_markup: createInlineKeyboard(messages.exerciseOptions_2),
+        reply_markup: createKeyboardButtons(messages.exerciseOptions_2),
     })
 }
 
 export function showThirdExercise(chatId: number) {
     const message = messages.exerciseTitle_3 + '\n' + messages.exerciseMessage_3
     bot.api.sendMessage(chatId, message, {
-        reply_markup: createInlineKeyboard(messages.exerciseOptions_3),
+        reply_markup: createKeyboardButtons(messages.exerciseOptions_3),
     })
 }
 
 export function showFourthExercise(chatId: number) {
     const message = messages.exerciseTitle_4 + '\n' + messages.exerciseMessage_4
     bot.api.sendMessage(chatId, message, {
-        reply_markup: createInlineKeyboard(messages.exerciseOptions_4),
+        reply_markup: createKeyboardButtons(messages.exerciseOptions_4),
     })
 }
 
@@ -89,8 +89,15 @@ function handleBeginFirstExercise(ctx: any) {
 
 export function showHelp(chatId: number) {
     // const message = messages.exerciseTitle_1 + '\n' + messages.exerciseMessage_1
-    const keyboard = createInlineKeyboard([messages.exit])
+    const keyboard = createKeyboardButtons([messages.exit])
     bot.api.sendMessage(chatId, 'Здесь будет информация о связи и помощи', {
         reply_markup: keyboard,
     })
+}
+
+export function createKeyboardButtons(keys: string[]) {
+    return { 
+        keyboard: [keys],
+        resize_keyboard: true
+    }
 }
