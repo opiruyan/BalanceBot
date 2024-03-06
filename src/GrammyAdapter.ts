@@ -96,8 +96,17 @@ export function showHelp(chatId: number) {
 }
 
 export function createKeyboardButtons(keys: string[]) {
+    let rows: string[][] = [keys]
+
+    if (keys.length > 2) {
+        rows = []
+        for (let i = 0; i < keys.length; i += 2) {
+            rows.push(keys.slice(i, i + 2))
+        }
+    }
+
     return { 
-        keyboard: [keys],
+        keyboard: rows,
         resize_keyboard: true
     }
 }
