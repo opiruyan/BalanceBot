@@ -96,14 +96,10 @@ export function showHelp(chatId: number) {
 }
 
 export function createKeyboardButtons(keys: string[]) {
-    let rows: string[][] = [keys]
-
-    if (keys.length > 2) {
-        rows = []
-        for (let i = 0; i < keys.length; i += 2) {
-            rows.push(keys.slice(i, i + 2))
-        }
-    }
+    const rows: string[][] = []
+    keys.forEach(button => {
+        rows.push([button])
+    })
 
     return { 
         keyboard: rows,
