@@ -1,4 +1,4 @@
-import { hideKeyboard, showFirstExercise, showFourthExercise, showHelp, showResults, showSecondExercise, showThirdExercise } from './GrammyAdapter'
+import { hideKeyboard, showFirstExercise, showFourthExercise, showHelp, showIntro, showResults, showSecondExercise, showThirdExercise } from './GrammyAdapter'
 import { messages } from './Messages'
 
 type ChatId = number
@@ -54,7 +54,10 @@ export async function handleResponse(chatId: number, state: BotState, message: s
         state.sessions.set(chatId, session)
     }
 
-    session.currentExercise++
+    if (message !== messages.goBack) {
+        session.currentExercise++
+    }
+
     switch (session.currentExercise) {
         case STATE_STAGE.FIRST_EXERCISE:
             showFirstExercise(session.currentChatId)
@@ -79,5 +82,7 @@ export async function handleResponse(chatId: number, state: BotState, message: s
             session.currentExercise = 0
             hideKeyboard(chatId)
             break
+        default:
+            showIntro(chatId)
    }
 }

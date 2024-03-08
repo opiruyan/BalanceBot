@@ -89,7 +89,7 @@ function handleBeginFirstExercise(ctx: any) {
 
 export function showHelp(chatId: number) {
     // const message = messages.exerciseTitle_1 + '\n' + messages.exerciseMessage_1
-    const keyboard = createKeyboardButtons([messages.exit])
+    const keyboard = createKeyboardButtons([messages.goBack, messages.exit])
     bot.api.sendMessage(chatId, messages.help.message, {
         reply_markup: keyboard,
     })
@@ -105,4 +105,10 @@ export function createKeyboardButtons(keys: string[]) {
         keyboard: rows,
         resize_keyboard: true
     }
+}
+
+export function showIntro(chatId: number) {
+    bot.api.sendMessage(chatId, messages.welcomeMessage, {
+        reply_markup: createKeyboardButtons([messages.exercise1, messages.help.button]),
+    })
 }

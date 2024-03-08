@@ -1,4 +1,4 @@
-import { createInlineKeyboard, createKeyboardButtons } from './GrammyAdapter'
+import { createKeyboardButtons } from './GrammyAdapter'
 import { messages } from './Messages'
 
 export function handleStartCommand(ctx: any) {

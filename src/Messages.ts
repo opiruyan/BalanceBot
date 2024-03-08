@@ -60,6 +60,7 @@ export const messages = {
         'YouTube-канал:\n' +
         'https://www.youtube.com/@OANAOOOALIVE',
     },
+    goBack: "Назад",
     exit: "Выход",
     bye: "Пока!",
 }
