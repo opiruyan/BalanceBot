@@ -90,7 +90,7 @@ function handleBeginFirstExercise(ctx: any) {
 export function showHelp(chatId: number) {
     // const message = messages.exerciseTitle_1 + '\n' + messages.exerciseMessage_1
     const keyboard = createKeyboardButtons([messages.exit])
-    bot.api.sendMessage(chatId, 'Здесь будет информация о связи и помощи', {
+    bot.api.sendMessage(chatId, messages.help.message, {
         reply_markup: keyboard,
     })
 }

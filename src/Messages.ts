@@ -43,7 +43,23 @@ export const messages = {
         startDesciption: 'Start the practice'
     },
     
-    help: "Справка",
+    help: {
+        button: "Справка",
+        message: 'Результаты ваших сессий теперь будут перед вашими глазами.\n' +
+       'Анализируя показатели, вы обретете более глубокое понимание своего состояния.\n' +
+        'Следующий шаг — осознанное управление!\n' +
+        '\n' +
+        'В этом вам помогут:'+
+        '\n' +
+        'Книга:\n' +
+        'https://www.litres.ru/book/oksana-morozova-32948230/kluch-ot-vseh-dverey-70373992/'+
+        '\n' +
+        'Telegram-канал:\n' +
+        'https://t.me/OANAOOOALIVE\n' +
+        '\n' +
+        'YouTube-канал:\n' +
+        'https://www.youtube.com/@OANAOOOALIVE',
+    },
     exit: "Выход",
     bye: "Пока!",
 }

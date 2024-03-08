@@ -35,7 +35,7 @@ export async function handleResponse(chatId: number, state: BotState, message: s
         return
     }
 
-    if (message === messages.help) {
+    if (message === messages.help.button) {
         showHelp(chatId)
         return
     }
