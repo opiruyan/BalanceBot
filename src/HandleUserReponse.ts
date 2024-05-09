@@ -1,4 +1,5 @@
-import { hideKeyboard, showFirstExercise, showFourthExercise, showHelp, showIntro, showResults, showSecondExercise, showThirdExercise } from './GrammyAdapter'
+import { Message } from 'grammy/types'
+import { deleteMessage, hideKeyboard, showFirstExercise, showFourthExercise, showHelp, showIntro, showResults, showSecondExercise, showThirdExercise } from './GrammyAdapter'
 import { messages } from './Messages'
 
 type ChatId = number
@@ -7,8 +8,9 @@ export type BotState = {
     sessions: Map<ChatId, {
         currentExercise: number
         currentChatId: number
-        session: SessionAnswers,
-    }>,
+        firstMessageId: number
+        session: SessionAnswers
+    }>
 }
 
 export type SessionAnswers = {
@@ -26,8 +28,29 @@ export const STATE_STAGE = {
     SHOW_RESULTS: 5,
 } as const
 
+export async function processUserResponse(chatId: number, state: BotState, message: Message) {
+    let session = state.sessions.get(chatId)
+    if (!session) {
+        session = {
+            currentExercise: 0,
+            currentChatId: chatId,
+            firstMessageId: message.message_id,
+            session: {
+                catchingThoughts: 'Думаю о себе',
+                balanceCoin: 'Да',
+                energyLevel: '+1',
+                compass: 'Созерцание [Развитие]'
+            }
+        }
+        state.sessions.set(chatId, session)
+    }
+}
+
 export async function handleResponse(chatId: number, state: BotState, message: string) {
     let session = state.sessions.get(chatId)
+    if (!session) {
+        throw new Error('Session not found')
+    }
 
     if (message === messages.exit)  {
         state.sessions.delete(chatId)
@@ -38,20 +61,6 @@ export async function handleResponse(chatId: number, state: BotState, message: s
     if (message === messages.help.button) {
         showHelp(chatId)
         return
-    }
-
-    if (!session) {
-        session = {
-            currentExercise: 0,
-            currentChatId: chatId,
-            session: {
-                catchingThoughts: 'Думаю о себе',
-                balanceCoin: 'Да',
-                energyLevel: '+1',
-                compass: 'Созерцание [Развитие]'
-            }
-        }
-        state.sessions.set(chatId, session)
     }
 
     if (message !== messages.goBack) {
@@ -79,10 +88,18 @@ export async function handleResponse(chatId: number, state: BotState, message: s
         case STATE_STAGE.SHOW_RESULTS:
             session.session.compass = message as SessionAnswers['compass']
             await showResults(session.currentChatId)
-            session.currentExercise = 0
             hideKeyboard(chatId)
             break
         default:
             showIntro(chatId)
    }
+}
+
+
+export function deleteMessagesInChat(chatId: number, stopMessageId: number, latestMessageId: number) {
+    let currentMessageId = latestMessageId
+    while (currentMessageId > stopMessageId - 3) {
+        deleteMessage(chatId, currentMessageId)
+        currentMessageId--
+    }
 }

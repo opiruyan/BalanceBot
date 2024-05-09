@@ -112,3 +112,7 @@ export function showIntro(chatId: number) {
         reply_markup: createKeyboardButtons([messages.exercise1, messages.help.button]),
     })
 }
+
+export function deleteMessage(chatId: number, messageId: number) {
+    bot.api.deleteMessage(chatId, messageId)
+}
